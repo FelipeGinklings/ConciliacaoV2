@@ -2,7 +2,7 @@ from typing import List, Item
 import PyPDF2
 import tkinter as tk
 from tkinter import filedialog
-import os
+from utils import CreateFile
 
 
 def file_name():
@@ -10,7 +10,6 @@ def file_name():
     root.withdraw()
 
     file_path = filedialog.askopenfilename(title='Escolha o PDF para análise')
-    file_name = os.path.basename(file_path)
     return file_path
 
 
@@ -112,6 +111,7 @@ def main():
     # writepath = write_path()
     if not write_path:
         return 0 
+    create_file = CreateFile(write_path)
 
 
 if __name__ == '__main__':
