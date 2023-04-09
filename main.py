@@ -89,6 +89,9 @@ def main():
     pdf_list = pdf_to_list(file_name)
     raw_data = get_data(0, pdf_list)
     grouped_data, grouped_error = group_data(raw_data)
+    write_path = "/home/felipe/Documentos/VSCodeProjetos/Conciliação de Notas/V2/Resultados"
+    if not write_path:
+        return 0 
 
 
 if __name__ == '__main__':
