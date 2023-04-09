@@ -59,6 +59,9 @@ def get_data(start: int = 0, pdf_list: List[str] = []):
         complement=complement,
     )
 
+
+    # Não passa daqui até ele chegar no final
+    # next_data é uma função dentro da função em loop
     next_data = get_data(position_valor+1, pdf_list)
     next_data.append(data)
     return next_data
