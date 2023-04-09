@@ -5,7 +5,7 @@ from tkinter import filedialog
 import os
 
 
-def name_file():
+def file_name():
     root = tk.Tk()
     root.withdraw()
 
@@ -14,7 +14,7 @@ def name_file():
     return file_path
 
 
-def path_end():
+def write_path():
     root = tk.Tk()
     root.withdraw()
 
@@ -102,12 +102,14 @@ def group_data(raw_data:List[Item]):
 
 def main():
     file_name = 'teste.pdf'
+    # filename = file_name()
     if not file_name:
         return 0
     pdf_list = pdf_to_list(file_name)
     raw_data = get_data(0, pdf_list)
     grouped_data, grouped_error = group_data(raw_data)
     write_path = "/home/felipe/Documentos/VSCodeProjetos/Conciliação de Notas/V2/Resultados"
+    # writepath = write_path()
     if not write_path:
         return 0 
 
