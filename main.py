@@ -1,6 +1,8 @@
 from typing import List
 import PyPDF2
 
+from utils import Item
+
 
 def pdf_to_list(filename: str = 'teste.pdf'):
 
@@ -51,6 +53,17 @@ def get_data(start: int = 0):
     hist = int(pdf_list[position_hist+2])
     has_error, complement = get_complement(
         position_complemento, position_complemento_end)
+
+    data = Item(
+        value=value,
+        hist=hist,
+        has_error=has_error,
+        complement=complement,
+    )
+    
+    next_data = get_data(position_valor+1)
+    next_data.append(data)
+    return next_data
 
 
 def main():
