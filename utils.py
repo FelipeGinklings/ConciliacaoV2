@@ -6,7 +6,7 @@ from typing import Union
 class Item:
     value: float
     hist: int
-    comp: Union[str, int]
+    complement: Union[str, int]
     has_error: bool
 
     @property
