@@ -1,8 +1,26 @@
-from typing import List
+from typing import List, Item
 import PyPDF2
+import tkinter as tk
+from tkinter import filedialog
+import os
 
-from utils import Item
 
+def name_file():
+    root = tk.Tk()
+    root.withdraw()
+
+    file_path = filedialog.askopenfilename(title='Escolha o PDF para análise')
+    file_name = os.path.basename(file_path)
+    return file_path
+
+
+def path_end():
+    root = tk.Tk()
+    root.withdraw()
+
+    end = filedialog.askdirectory(
+        title='Escolha onde os arquivos serão exportados')
+    return end
 
 def pdf_to_list(filename: str = 'teste.pdf'):
 
