@@ -66,6 +66,21 @@ def get_data(start: int = 0, pdf_list: List[str] = []):
     next_data.append(data)
     return next_data
 
+def group_data(raw_data:List[Item]):
+    grouped_data = {}
+    grouped_error: List[Item] = []
+    for item in raw_data:
+        if item.has_error:
+            grouped_error.append(item)
+        else:
+            if item.complement not in grouped_data:
+                grouped_data[item.complement] = {
+                    'items': [item]
+                }
+            else:
+                grouped_data[item.complement]['items'].append(item)
+    return grouped_data, grouped_error
+
 
 def main():
     file_name = 'teste.pdf'
@@ -73,8 +88,7 @@ def main():
         return 0
     pdf_list = pdf_to_list(file_name)
     raw_data = get_data(0, pdf_list)
-    for item in raw_data:
-        print(item)
+    grouped_data, grouped_error = group_data(raw_data)
 
 
 if __name__ == '__main__':
