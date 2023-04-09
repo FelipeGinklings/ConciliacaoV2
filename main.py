@@ -24,7 +24,7 @@ def pdf_to_list(filename: str = 'teste.pdf'):
     return total_text.split()
 
 
-def get_complement(p_complemento, p_complemento_end, pdf_list: List[str]):
+def get_complement(p_complemento: int, p_complemento_end: int, pdf_list: List[str]):
     try:
         complement = int(pdf_list[p_complemento+2])
     except ValueError:
@@ -44,6 +44,7 @@ def get_data(start: int = 0, pdf_list: List[str] = []):
         position_complemento = pdf_list.index('Complemento', position_hist)
         position_complemento_end = pdf_list.index('*', position_complemento)
     except ValueError:
+        print()
         return []
     value = float(
         pdf_list[position_valor+2].replace('.', '').replace(',', '.'))
@@ -58,7 +59,7 @@ def get_data(start: int = 0, pdf_list: List[str] = []):
         complement=complement,
     )
 
-    next_data = get_data(position_valor+1)
+    next_data = get_data(position_valor+1, pdf_list)
     next_data.append(data)
     return next_data
 
@@ -68,8 +69,9 @@ def main():
     if not file_name:
         return 0
     pdf_list = pdf_to_list(file_name)
-    start = 0
-    get_data(start=start, pdf_list=pdf_list)
+    raw_data = get_data(0, pdf_list)
+    for item in raw_data:
+        print(item)
 
 
 if __name__ == '__main__':
