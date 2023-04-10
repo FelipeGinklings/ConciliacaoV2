@@ -17,7 +17,7 @@ class Item:
 
 @dataclass
 class Result:
-    complement: Union(str, int)
+    complement: Union[str, int]
     total: float
     paid: float
     difference: float
