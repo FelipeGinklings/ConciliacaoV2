@@ -76,9 +76,6 @@ def get_data(start: int = 0, pdf_list: List[str] = []):
         has_error=has_error,
         complement=complement,
     )
-
-    # Não passa daqui até ele chegar no final
-    # next_data é uma função dentro da função em loop
     next_data = get_data(position_valor+1, pdf_list)
     next_data.append(data)
     return next_data
@@ -133,7 +130,7 @@ def final_result(data):
         totals += item.total
         payments += item.paid
         differences += item.difference
-    
+
     finalresult = Result(
         complement='Resultado Final',
         total=totals,
@@ -151,8 +148,8 @@ def separate_data(grouped_data):
 
     for items in grouped_data.values():
         result: Result = items['results']
-        
-        # Pagamento do Ano Anterior 
+
+        # Pagamento do Ano Anterior
         if result.difference < 0:
             last_year[result.complement] = result
         # Pagamento Completo
@@ -161,7 +158,7 @@ def separate_data(grouped_data):
         # Pagamento Incompleto
         elif result.difference > 0 and result.paid > 0:
             not_paid[result.complement] = result
-        # Pagamento Próximo   
+        # Pagamento Próximo
         elif result.paid == 0:
             next_year[result.complement] = result
 
@@ -174,17 +171,18 @@ def separate_data(grouped_data):
 
 
 def main():
-    file_name = 'teste.pdf'  # filename = file_name()
-    if not file_name:
+    # file_name = 'teste.pdf'
+    filename = file_name()
+    if not filename:
         return 0
-    pdf_list = pdf_to_list(file_name)
+    pdf_list = pdf_to_list(filename)
     raw_data = get_data(0, pdf_list)
     grouped_data, grouped_error = group_data(raw_data)
-    # writepath = write_path()
-    write_path = "/home/felipe/Documentos/VSCodeProjetos/Conciliação de Notas/V2/Resultados"
-    if not write_path:
+    writepath = write_path()
+    # write_path = "/home/felipe/Documentos/VSCodeProjetos/Conciliação de Notas/ConciliacaoV2/Resultados"
+    if not writepath:
         return 0
-    create_file = CreateFile(write_path)
+    create_file = CreateFile(writepath)
     if grouped_error:
         create_file.write_file("ERROR", grouped_error)
     for items in grouped_data.values():
