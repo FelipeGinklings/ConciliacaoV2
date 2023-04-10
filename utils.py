@@ -22,6 +22,18 @@ class Result:
     paid: float
     difference: float
 
+    @property
+    def formated_total(self):
+        return '{:.2f}'.format(self.total).replace('.', ',')
+
+    @property
+    def formated_paid(self):
+        return '{:.2f}'.format(self.paid).replace('.', ',')
+
+    @property
+    def formated_difference(self):
+        return '{:.2f}'.format(self.difference).replace('.', ',')
+
 
 class SelectorNotFound(Exception):
 
