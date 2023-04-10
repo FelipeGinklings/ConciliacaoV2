@@ -77,7 +77,7 @@ class CreateFile():
     def __write_erros(self, file, data):
         for index, item in enumerate(data):
             item: Item
-            file.write_lines([
+            file.writelines([
                 f"Erro: {index+1}\n",
                 f"Complemento: {item.complement}\n",
                 f"Valor: {item.formated_value}\n",
