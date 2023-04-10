@@ -1,8 +1,8 @@
-from typing import List, Item
+from typing import List
 import PyPDF2
 import tkinter as tk
 from tkinter import filedialog
-from utils import CreateFile
+from utils import CreateFile, Item
 
 
 def file_name():
@@ -20,6 +20,7 @@ def write_path():
     end = filedialog.askdirectory(
         title='Escolha onde os arquivos serão exportados')
     return end
+
 
 def pdf_to_list(filename: str = 'teste.pdf'):
 
@@ -76,14 +77,14 @@ def get_data(start: int = 0, pdf_list: List[str] = []):
         complement=complement,
     )
 
-
     # Não passa daqui até ele chegar no final
     # next_data é uma função dentro da função em loop
     next_data = get_data(position_valor+1, pdf_list)
     next_data.append(data)
     return next_data
 
-def group_data(raw_data:List[Item]):
+
+def group_data(raw_data: List[Item]):
     grouped_data = {}
     grouped_error: List[Item] = []
     for item in raw_data:
@@ -110,8 +111,8 @@ def main():
     write_path = "/home/felipe/Documentos/VSCodeProjetos/Conciliação de Notas/V2/Resultados"
     # writepath = write_path()
     if not write_path:
-        return 0 
-    create_file = CreateFile(write_path)
+        return 0
+    # create_file = CreateFile(write_path)
 
 
 if __name__ == '__main__':
