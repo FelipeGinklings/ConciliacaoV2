@@ -45,19 +45,19 @@ class SelectorNotFound(Exception):
 class CreateFile():
 
     SELECTORS = {
-        'PAA': {
+        'LAST YEAR': {
             'filename': 'Pagamentos Ano Anterior.txt',
             'header': 'Aqui estão listados todos os pagamentos de notas do ano passado:'
         },
-        'PC': {
+        'PAID': {
             'filename': 'Pagamentos Completos.txt',
             'header': 'Aqui estão as notas desse ano que foram completamente pagas:'
         },
-        'PI': {
+        'NOT PAID': {
             'filename': 'Pagamentos Incompletos.txt',
             'header': 'Aqui estão as notas desse ano que não foram completamente pagas:'
         },
-        'PAS': {
+        'NEXT YEAR': {
             'filename': 'Somente Pagamentos do Ano Subsequente.txt',
             'header': 'Aqui estão as notas a serem pagas no próximo ano:'
         },
