@@ -17,6 +17,7 @@ class Item:
 
 @dataclass
 class Result:
+    complement: int
     total: float
     paid: float
     difference: float

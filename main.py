@@ -104,6 +104,7 @@ def hidrate_data(data: Dict[str, List[Item]]):
     total = 0
     paid = 0
     difference = 0
+    complement = 0
     for item in data['items']:
         item: Item
         if item.hist == 20:
@@ -112,8 +113,10 @@ def hidrate_data(data: Dict[str, List[Item]]):
         elif item.hist == 133:
             difference -= item.value
             paid += item.value
+        complement = item.complement
 
-    data = Result(
+    data['results'] = Result(
+        complement=complement,
         total=total,
         paid=paid,
         difference=difference,
@@ -121,19 +124,44 @@ def hidrate_data(data: Dict[str, List[Item]]):
     return data
 
 
+def separate_data(grouped_data):
+    not_paid = {}
+    last_year = {}
+    paid = {}
+    next_year = {}
+
+    for items in grouped_data.values():
+        result: Result = items['results']
+        if result.difference < 0:
+            next_year[result.complement] = result
+        elif result.difference == 0:
+            paid[result.complement] = result
+        elif result.difference > 0:
+            not_paid[result.complement] = result
+        elif result.difference == result.total:
+            last_year[result.complement] = result
+
+    return not_paid, paid, next_year, last_year
+
+
 def main():
-    file_name = 'teste.pdf' # filename = file_name()
+    file_name = 'teste.pdf'  # filename = file_name()
     if not file_name:
         return 0
     pdf_list = pdf_to_list(file_name)
     raw_data = get_data(0, pdf_list)
     grouped_data, grouped_error = group_data(raw_data)
-    write_path = "/home/felipe/Documentos/VSCodeProjetos/Conciliação de Notas/V2/Resultados" # writepath = write_path()
+    # writepath = write_path()
+    write_path = "/home/felipe/Documentos/VSCodeProjetos/Conciliação de Notas/V2/Resultados"
     if not write_path:
         return 0
     create_file = CreateFile(write_path)
     if grouped_error:
         create_file.write_file("ERROR", grouped_error)
+    for items in grouped_data.values():
+        items = hidrate_data(items)
+
+    not_paid, paid, next_year, last_year = separate_data(grouped_data)
 
 
 if __name__ == '__main__':
