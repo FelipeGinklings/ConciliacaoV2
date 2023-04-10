@@ -96,3 +96,13 @@ class CreateFile():
                 f"Valor: {item.formated_value}\n",
                 "\n"
             ])
+
+    def __write_items(self, file, data: Dict[int, Result]):
+        for item in data.values():
+            file.writelines([
+                f"Complemento: {item.complement}\n",
+                f"Total: {item.formated_total}\n",
+                f"Pagamento: {item.formated_paid}\n",
+                f"Diferença: {item.formated_difference}\n",
+                f"\n",
+            ])
