@@ -151,14 +151,19 @@ def separate_data(grouped_data):
 
     for items in grouped_data.values():
         result: Result = items['results']
+        
+        # Pagamento do Ano Anterior 
         if result.difference < 0:
-            next_year[result.complement] = result
+            last_year[result.complement] = result
+        # Pagamento Completo
         elif result.difference == 0:
             paid[result.complement] = result
-        elif result.difference > 0:
+        # Pagamento Incompleto
+        elif result.difference > 0 and result.paid > 0:
             not_paid[result.complement] = result
-        elif result.difference == result.total:
-            last_year[result.complement] = result
+        # Pagamento Próximo   
+        elif result.paid == 0:
+            next_year[result.complement] = result
 
     next_year['final result'] = final_result(next_year)
     paid['final result'] = final_result(paid)
