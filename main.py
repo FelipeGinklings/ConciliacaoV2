@@ -135,7 +135,7 @@ def final_result(data):
         differences += item.difference
     
     finalresult = Result(
-        complement='final result',
+        complement='Resultado Final',
         total=totals,
         paid=payments,
         difference=differences,
