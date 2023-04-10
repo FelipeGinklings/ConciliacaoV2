@@ -17,7 +17,7 @@ class Item:
 
 @dataclass
 class Result:
-    complement: int
+    complement: Union(str, int)
     total: float
     paid: float
     difference: float
@@ -33,6 +33,13 @@ class Result:
     @property
     def formated_difference(self):
         return '{:.2f}'.format(self.difference).replace('.', ',')
+    
+    @property
+    def formated_complement(self):
+        if self.complement is str:
+            return self.complement
+        else:
+            return f'Complemento: {self.complement}'
 
 
 class SelectorNotFound(Exception):
@@ -100,7 +107,7 @@ class CreateFile():
     def __write_items(self, file, data: Dict[int, Result]):
         for item in data.values():
             file.writelines([
-                f"Complemento: {item.complement}\n",
+                f"{item.formated_complement}\n",
                 f"Total: {item.formated_total}\n",
                 f"Pagamento: {item.formated_paid}\n",
                 f"Diferença: {item.formated_difference}\n",
