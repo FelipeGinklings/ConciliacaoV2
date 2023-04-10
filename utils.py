@@ -15,6 +15,13 @@ class Item:
         return '{:.2f}'.format(self.value).replace('.', ',')
 
 
+@dataclass
+class Result:
+    total: float
+    paid: float
+    difference: float
+
+
 class SelectorNotFound(Exception):
 
     def __init__(self):
@@ -61,8 +68,8 @@ class CreateFile():
         with open(full_path, 'w') as file:
             file.write(header)
             file.write('\n\n')
-            
-            if  selector == 'ERROR':
+
+            if selector == 'ERROR':
                 self.__write_erros(file, data)
             else:
                 self.__write_items(file, data)
@@ -70,19 +77,9 @@ class CreateFile():
     def __write_erros(self, file, data):
         for index, item in enumerate(data):
             item: Item
-            file.writelines([
+            file.write_lines([
                 f"Erro: {index+1}\n",
-                f"Complemento: {item.comp}\n",
+                f"Complemento: {item.complement}\n",
                 f"Valor: {item.formated_value}\n",
-                "\n"
-            ])
-
-    def __write_items(self, file, data):
-        for k, v in data.items():
-            file.writelines([
-                f"Complemento: {k}\n",
-                f"Total: {v['total']}\n",
-                f"Pago: {v['paid']}\n",
-                f"Diferença: {v['difference']}\n",
                 "\n"
             ])
