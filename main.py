@@ -1,8 +1,8 @@
-from typing import List
+from typing import Dict, List
 import PyPDF2
 import tkinter as tk
 from tkinter import filedialog
-from utils import CreateFile, Item
+from utils import CreateFile, Item, Result
 
 
 def file_name():
@@ -100,6 +100,27 @@ def group_data(raw_data: List[Item]):
     return grouped_data, grouped_error
 
 
+def hidrate_data(data: Dict[str, List[Item]]):
+    total = 0
+    paid = 0
+    difference = 0
+    for item in data['items']:
+        item: Item
+        if item.hist == 20:
+            difference += item.value
+            total += item.value
+        elif item.hist == 133:
+            difference -= item.value
+            paid += item.value
+
+    data = Result(
+        total=total,
+        paid=paid,
+        difference=difference,
+    )
+    return data
+
+
 def main():
     file_name = 'teste.pdf'
     # filename = file_name()
@@ -112,7 +133,10 @@ def main():
     # writepath = write_path()
     if not write_path:
         return 0
-    # create_file = CreateFile(write_path)
+    create_file = CreateFile(write_path)
+    grouped_error = {}
+    if grouped_error:
+        create_file.write_file("ERROR", grouped_error)
 
 
 if __name__ == '__main__':
