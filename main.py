@@ -122,19 +122,16 @@ def hidrate_data(data: Dict[str, List[Item]]):
 
 
 def main():
-    file_name = 'teste.pdf'
-    # filename = file_name()
+    file_name = 'teste.pdf' # filename = file_name()
     if not file_name:
         return 0
     pdf_list = pdf_to_list(file_name)
     raw_data = get_data(0, pdf_list)
     grouped_data, grouped_error = group_data(raw_data)
-    write_path = "/home/felipe/Documentos/VSCodeProjetos/Conciliação de Notas/V2/Resultados"
-    # writepath = write_path()
+    write_path = "/home/felipe/Documentos/VSCodeProjetos/Conciliação de Notas/V2/Resultados" # writepath = write_path()
     if not write_path:
         return 0
     create_file = CreateFile(write_path)
-    grouped_error = {}
     if grouped_error:
         create_file.write_file("ERROR", grouped_error)
 
