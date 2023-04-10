@@ -117,9 +117,9 @@ def hidrate_data(data: Dict[str, List[Item]]):
 
     data['results'] = Result(
         complement=complement,
-        total=total,
-        paid=paid,
-        difference=difference,
+        total=round(total, 2),
+        paid=round(paid, 2),
+        difference=round(difference, 2),
     )
     return data
 
