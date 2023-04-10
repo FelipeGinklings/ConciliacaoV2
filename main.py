@@ -144,6 +144,18 @@ def separate_data(grouped_data):
     return not_paid, paid, next_year, last_year
 
 
+def total(data):
+    total_total = 0
+    total_paid = 0
+    total_difference = 0
+
+    for item in data.values():
+        total_total += item.total
+        total_paid += item.paid
+        total_difference += item.difference
+    return total_total, total_paid, total_difference
+
+
 def main():
     file_name = 'teste.pdf'  # filename = file_name()
     if not file_name:
