@@ -124,11 +124,30 @@ def hidrate_data(data: Dict[str, List[Item]]):
     return data
 
 
+def final_result(data):
+    totals = 0
+    payments = 0
+    differences = 0
+
+    for item in data.values():
+        totals += item.total
+        payments += item.paid
+        differences += item.difference
+    
+    finalresult = Result(
+        complement='final result',
+        total=totals,
+        paid=payments,
+        difference=differences,
+    )
+    return finalresult
+
+
 def separate_data(grouped_data):
+    next_year = {}
+    paid = {}
     not_paid = {}
     last_year = {}
-    paid = {}
-    next_year = {}
 
     for items in grouped_data.values():
         result: Result = items['results']
@@ -141,19 +160,12 @@ def separate_data(grouped_data):
         elif result.difference == result.total:
             last_year[result.complement] = result
 
+    next_year['final result'] = final_result(next_year)
+    paid['final result'] = final_result(paid)
+    not_paid['final result'] = final_result(not_paid)
+    last_year['final result'] = final_result(last_year)
+
     return not_paid, paid, next_year, last_year
-
-
-def total(data):
-    total_total = 0
-    total_paid = 0
-    total_difference = 0
-
-    for item in data.values():
-        total_total += item.total
-        total_paid += item.paid
-        total_difference += item.difference
-    return total_total, total_paid, total_difference
 
 
 def main():
@@ -174,6 +186,11 @@ def main():
         items = hidrate_data(items)
 
     not_paid, paid, next_year, last_year = separate_data(grouped_data)
+    if not_paid or paid or not next_year or last_year:
+        create_file.write_file("NOT PAID", not_paid)
+        create_file.write_file("PAID", paid)
+        create_file.write_file("NEXT YEAR", next_year)
+        create_file.write_file("LAST YEAR", last_year)
 
 
 if __name__ == '__main__':
